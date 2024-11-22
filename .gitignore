@@ -1,0 +1,29 @@
+#
+/.venv/
+__pycache__/
+migrations/
+migrations
+notes
+notes/
+wvenv
+wvenv/
+venv
+venv/
+image/*
+!image/default-user.jpg
+!image/special-folder/
+user/*
+!user/default-user.jpg
+category/*
+!category/default-user.jpg
+
+
+
+# Distribution / packaging
+.dist/
+.build/
+db.sqlite3
+
+# Local configuration
+.idea
+.idea/
