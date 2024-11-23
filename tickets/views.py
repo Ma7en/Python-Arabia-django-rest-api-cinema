@@ -7,9 +7,13 @@ from rest_framework.decorators import api_view
 from rest_framework import status, filters
 from rest_framework.views import APIView
 from rest_framework import generics, mixins, viewsets
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from . import models as tickets_models
 from . import serializers as tickets_serializers
+
+from .permissions import IsAuthorOrReadOnly
 
 
 # Create your views here.
@@ -178,12 +182,24 @@ class mixins_pk(
 class generics_list(generics.ListCreateAPIView):
     queryset = tickets_models.Guest.objects.all()
     serializer_class = tickets_serializers.GuestSerializer
+    # 2- auth
+    # authentication_classes = [BasicAuthentication]
+    # permission_classes = [IsAu-thenticated]
+    # 2- token
+    authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
 
 # 6.2 (get - put - delete)
 class generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = tickets_models.Guest.objects.all()
     serializer_class = tickets_serializers.GuestSerializer
+    # 2- auth
+    # authentication_classes = [BasicAuthentication]
+    # permission_classes = [IsAuthenticated]
+    # 2- token
+    authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
 
 
 # =================================================================
@@ -237,3 +253,11 @@ def new_reservation(request):
     reservation.save()
 
     return Response(status=status.HTTP_201_CREATED)
+
+
+# =================================================================
+# 10 post author editor
+class Post_pk(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthorOrReadOnly]
+    queryset = tickets_models.Post.objects.all()
+    serializer_class = tickets_serializers.PostSerializer

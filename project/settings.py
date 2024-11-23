@@ -41,9 +41,30 @@ INSTALLED_APPS = [
     "tickets.apps.TicketsConfig",
     # installed
     "rest_framework",
+    "rest_framework.authtoken",
 ]
 
-REST_FRAMEWORK = {}
+# --
+# Global
+# auth class - per class
+REST_FRAMEWORK = {
+    # =================================================================
+    # 1- auth
+    # Basic Authentication -> user and password is required
+    # "DEFAULT_AUTHENTICATION_CLASSES": [
+    #     "rest_framework.authentication.BasicAuthentication",
+    # ],
+    # "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    # =================================================================
+    # Token Authentication ->
+    # "DEFAULT_AUTHENTICATION_CLASSES": [
+    #     "rest_framework.authentication.TokenAuthentication",
+    # ],
+    # "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+}
+
+# AllowANY -> IsAuthenticated -> IsAdminuser -> IsAuthenticatedReadOnly
+#
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

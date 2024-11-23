@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 
 # tickets
 from tickets import views as tickets_views
@@ -85,5 +86,21 @@ urlpatterns = [
     # =================================================================
     # 9 new_reservation
     path("fbv/newreservation/", tickets_views.new_reservation),
+    # =================================================================
+    # 10 rest auth url
+    path("api-auth", include("rest_framework.urls")),
+    # =================================================================
+    # 11 Token Authentication
+    path("api-token-auth", obtain_auth_token),
+    # =================================================================
+    # 12- post pk generics post_pk -
+    # path(
+    #     "post/genericslist/",
+    #     tickets_views.Post_List.as_view(),
+    # ),
+    path(
+        "post/genericslist/<int:pk>",
+        tickets_views.Post_pk.as_view(),
+    ),
     # =================================================================
 ]
